@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV === 'production'){
 	//Prod
-	module.exports = require('./prod.js');
+	module.exports = require('./prod');
 } else {
 	//Dev Env
-	module.exports = require('./dev.js');
+	module.exports = require('./dev');
 }
