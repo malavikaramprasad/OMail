@@ -7,7 +7,7 @@ const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
 	done(null,user.id);
-})
+});
 
 passport.deserializeUser((userId,done) => {
 	User.findById(userId)
@@ -24,22 +24,26 @@ passport.use(
       callbackURL: '/auth/google/callback',
       proxy: true
 	}, 
-	(accesstoken, refresh, profile, done ) => {
-		User.findOne({googleId:profile.id})
-			.then((oldUser) => {
-				if(oldUser){
-					done(null, oldUser);
-				} else {
-					new User({googleId:profile.id})
-					.save()
-						.then((newUser) => {
-						done(null,newUser);
-					})
-				}
+	async (accesstoken, refresh, profile, done ) => {
+    	const existingUser = await User.findOne({ googleId: profile.id });
+        if (existingUser) {
+            return done(null, existingUser);
+        }
+        const user = await new User({ googleId: profile.id }).save();
+        done(null, user);
+		// User.findOne({googleId:profile.id})
+		// 	.then((oldUser) => {
+		// 		if(oldUser){
+		// 			done(null, oldUser);
+		// 		} else {
+		// 			new User({googleId:profile.id})
+		// 			.save()
+		// 				.then((newUser) => {
+		// 				done(null,newUser);
+		// 			})
+		// 		}
 
-			})
-
-		
-	})	
+			//})
+	})
 );
 

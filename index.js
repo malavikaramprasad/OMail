@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const keys =  require('./config/keys');
 const bodyParser = require('body-parser');
-const userModel =  require('./models/user');
+require('./models/user');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 require('./services/passport');
@@ -43,8 +43,8 @@ if(process.env.NODE_ENV === 'production'){
 	// express will serve up the index.html file
 	// if it does not recognise the route.
 	const path = require('path');
-	app.get('*', (req,res) => {
-		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 	});
 }
 
