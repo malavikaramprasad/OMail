@@ -3,7 +3,7 @@ const express = require('express');
 
 
 module.exports = (app) => {
-	app.get('/auth/google', 
+	app.get('/auth/google',
 		passport.authenticate('google',{
 			scope:['profile','email']
 		}
@@ -11,6 +11,7 @@ module.exports = (app) => {
  
 	app.get('/auth/google/callback', passport.authenticate('google'),
 		(req,res) => {
+			console.log("Hey")	;
 			res.redirect('/surveys');
 		});
 
