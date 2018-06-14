@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const keys =  require('./config/keys');
 
 require('./models/user');
+require('./models/Surveys');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI); //connect to DB with the DB key generated in mlab
@@ -32,10 +33,11 @@ app.use(passport.session());
 // can be changed to just require
 const authRoutes = require('./routes/authRoutes');
 const billingRoutes = require('./routes/billingRoute');
+const surveyRoutes = require('./routes/surveyRoutes');
 
 authRoutes(app);
 billingRoutes(app);
-
+surveyRoutes(app);
 
 
 if(process.env.NODE_ENV === 'production'){
